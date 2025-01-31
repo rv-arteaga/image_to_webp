@@ -1,90 +1,71 @@
 # Image to WebP Converter
 
-A Python script for converting images (JPEG, PNG, and GIF, including animated GIFs) to the WebP format. This tool supports recursive directory processing and offers an option to delete original files after conversion.
+A Python script to convert images (JPG, PNG, GIF) to WebP format, with support for batch processing and optional deletion of original files.
 
----
+## Features
 
-## Prerequisites
-
-Before using this script, ensure you have the following:
-
-- **Python 3.6 or higher** installed on your system.
-- Required Python libraries:
-  - `Pillow`
-  - `imageio`
-
-You can install the necessary libraries using:
-
-```bash
-pip install Pillow imageio
-```
-
-Alternatively, you can install the libraries from a requirements file:
-
-```bash
-pip install -r requirements.txt
-```
-
----
+- Converts JPG, PNG, and GIF images to WebP format.
+- Supports animated GIF to WebP conversion using `ffmpeg`.
+- Recursive directory processing for batch conversions.
+- Option to delete original files after successful conversion.
+- Preserves file metadata (timestamps) during conversion.
 
 ## Installation
 
-Clone or download this repository to your local machine:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/image_to_webp.git
+   cd image_to_webp
+   ```
 
-```bash
-git clone https://github.com/rv-arteaga/image_to_webp.git
-cd image_to_webp
-```
+2. Install dependencies:
+   ```bash
+   pip install .
+   ```
 
----
+3. Ensure `ffmpeg` is installed for GIF conversion:
+   - On Ubuntu/Debian/Linux Mint:
+     ```bash
+     sudo apt install ffmpeg
+     ```
+   - On Arch Linux
+     ```bash
+     sudo pacman -S ffmpeg
+     ```
+     - On Fedora
+     ```bash
+     sudo dnf install ffmpeg
+     ```
 
 ## Usage
 
-### Basic Usage
-
-Run the script from the command line to convert images in a specified directory to WebP format:
+Run the script from the command line:
 
 ```bash
-python image_to_webp.py <directory_path> [options]
+python -m image_to_webp /path/to/images [options]
 ```
 
 ### Options
 
-- `-r`, `--recursive`: Process the specified directory and all its subdirectories.
-- `-d`, `--delete`: Delete the original files after successful conversion. Converted files will remain in the same directory (no `converted_webp` folder is created).
+- `-r`, `--recursive`: Process directories recursively.
+- `-d`, `--delete`: Delete original files after successful conversion.
 
----
+### Example
 
-## Example Commands
+Convert all images in a directory (non-recursive):
+```bash
+python -m image_to_webp /path/to/images
+```
 
-1. **Convert images in a directory** (non-recursive):
-
-   ```bash
-   python image_to_webp.py ./images
-   ```
-
-2. **Convert images in a directory and its subdirectories**:
-
-   ```bash
-   python image_to_webp.py ./images -r
-   ```
-
-3. **Convert images and delete the original files**:
-
-   ```bash
-   python image_to_webp.py ./images -d
-   ```
-
-4. **Convert images recursively and delete the original files**:
-
-   ```bash
-   python image_to_webp.py ./images -r -d
-   ```
-
----
+Convert all images recursively and delete originals:
+```bash
+python -m image_to_webp /path/to/images -r -d
+```
 
 ## License
 
-This project is licensed under the GNU General Public License v2. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the **GNU General Public License v2 (GPL-2.0)**. See the [LICENSE](LICENSE) file for details.
 
----
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.

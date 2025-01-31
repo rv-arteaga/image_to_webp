@@ -1,0 +1,20 @@
+[project]
+name = "image_to_webp"
+version = "0.2"
+description = "A Python script to convert images (JPG, PNG, GIF) to WebP format."
+authors = [
+    { name = "Arteaga", email = "arteagasan@proton.me" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "Pillow>=9.0.0",
+]
+
+[project.scripts]
+image_to_webp = "image_to_webp:main"
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"

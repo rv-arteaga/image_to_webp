@@ -1,7 +1,7 @@
 import os
 import sys
 from PIL import Image
-import imageio
+import subprocess
 import argparse
 
 def create_output_directory(base_path):
@@ -26,7 +26,7 @@ def convert_image_to_webp(input_path, output_path):
     try:
         with Image.open(input_path) as img:
             img.save(output_path, format="WEBP", quality=85)
-            print(f"Image converted: {input_path} -> {output_path}")
+            print(f"Successfully converted: {input_path} → {output_path}")
             # Copy metadata
             copy_file_metadata(input_path, output_path)
     except Exception as e:
@@ -35,17 +35,25 @@ def convert_image_to_webp(input_path, output_path):
     return True
 
 def convert_gif_to_webp(input_path, output_path):
-    """Converts an animated GIF to WebP format while preserving animation."""
+    """Converts an animated GIF to WebP format using ffmpeg."""
     try:
-        gif = imageio.mimread(input_path)
-        imageio.mimsave(output_path, gif, format="webp", loop=0, fps=10)
-        print(f"Animated GIF converted: {input_path} -> {output_path}")
-        # Copy metadata
-        copy_file_metadata(input_path, output_path)
-    except Exception as e:
-        print(f"Error converting GIF {input_path}: {e}")
+        command = [
+            "ffmpeg", "-loglevel", "error", "-y",  # Suppress unnecessary output
+            "-i", input_path,  # Input GIF
+            "-vf", "split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse",  # Improve color palette
+            "-loop", "0",  # Keep animation looping
+            "-quality", "80",  # WebP quality (adjustable)
+            output_path  # Output WebP
+        ]
+
+        subprocess.run(command, check=True)
+
+        print(f"Successfully converted: {input_path} → {output_path}")
+        return True
+
+    except subprocess.CalledProcessError:
+        print(f"Error converting: {input_path}")
         return False
-    return True
 
 def find_unprocessed_files(original_dir, converted_dir):
     """Finds files in the original directory that have not been converted."""
@@ -148,3 +156,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
