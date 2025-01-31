@@ -32,7 +32,7 @@ A Python script to convert images (JPG, PNG, GIF) to WebP format, with support f
      ```bash
      sudo pacman -S ffmpeg
      ```
-     - On Fedora
+   - On Fedora
      ```bash
      sudo dnf install ffmpeg
      ```
